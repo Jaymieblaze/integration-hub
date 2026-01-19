@@ -3,7 +3,7 @@ import { getAllCombinations } from "@/lib/combinations";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
-// 1. Generate Static Params (Pre-builds all pages)
+// Generate Static Params (Pre-builds all pages)
 export async function generateStaticParams() {
   const combos = getAllCombinations();
   return combos.map((combo) => ({
@@ -11,7 +11,7 @@ export async function generateStaticParams() {
   }));
 }
 
-// 2. The Page Component
+// The Page Component
 export default async function IntegrationPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
   const { slug } = resolvedParams;
@@ -47,7 +47,7 @@ export default async function IntegrationPage({ params }: { params: Promise<{ sl
           The ultimate guide to automating <strong>{sourceApp.name}</strong> and <strong>{destApp.name}</strong> in 2026.
         </p>
 
-        {/* THE MONEY BUTTON (Affiliate Link) */}
+        {/* Affiliate Link */}
         <div className="flex justify-center mb-12">
           <a 
             href={`https://www.make.com/en/register?pc=jaymieblaze&source=${slug}`}
