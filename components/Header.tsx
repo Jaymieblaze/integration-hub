@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 export default function Header() {
@@ -16,8 +17,14 @@ export default function Header() {
             href="/" 
             className="flex items-center gap-2 group"
           >
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-linear-to-r from-blue-600 to-purple-600 rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-              <span className="text-white font-bold text-base sm:text-xl">IH</span>
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl overflow-hidden shadow group-hover:scale-110 transition-transform">
+              <Image 
+                src="/logo.png" 
+                alt="IntegrationHub Logo" 
+                width={40} 
+                height={40}
+                className="w-full h-full object-contain"
+              />
             </div>
             <span className="text-base sm:text-xl font-bold text-slate-900">
               Integration<span className="bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Hub</span>
