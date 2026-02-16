@@ -3,11 +3,12 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import AppLogo from "./AppLogo";
 
 interface Combo {
   slug: string;
-  source: { name: string; color: string; category?: string };
-  dest: { name: string; color: string; category?: string };
+  source: { name: string; color: string; category?: string; logo: string };
+  dest: { name: string; color: string; category?: string; logo: string };
 }
 
 export default function SearchGrid({ combinations }: { combinations: Combo[] }) {
@@ -89,11 +90,11 @@ export default function SearchGrid({ combinations }: { combinations: Combo[] }) 
               >
                 <div className="flex items-center justify-between mb-2 md:mb-3">
                   <div className="flex -space-x-2 md:-space-x-3">
-                    <div className={`w-10 h-10 md:w-12 md:h-12 ${combo.source.color} rounded-full flex items-center justify-center text-white text-xs md:text-sm font-bold border-3 md:border-4 border-white/30 shadow-lg`}>
-                      {combo.source.name[0]}
+                    <div className={`w-10 h-10 md:w-12 md:h-12 ${combo.source.color} rounded-full border-3 md:border-4 border-white/30 shadow-lg overflow-hidden`}>
+                      <AppLogo name={combo.source.name} logo={combo.source.logo} size="sm" className={combo.source.color} />
                     </div>
-                    <div className={`w-10 h-10 md:w-12 md:h-12 ${combo.dest.color} rounded-full flex items-center justify-center text-white text-xs md:text-sm font-bold border-3 md:border-4 border-white/30 shadow-lg`}>
-                      {combo.dest.name[0]}
+                    <div className={`w-10 h-10 md:w-12 md:h-12 ${combo.dest.color} rounded-full border-3 md:border-4 border-white/30 shadow-lg overflow-hidden`}>
+                      <AppLogo name={combo.dest.name} logo={combo.dest.logo} size="sm" className={combo.dest.color} />
                     </div>
                   </div>
                   <span className="text-2xl md:text-3xl font-bold text-white/40">#{idx + 1}</span>
@@ -145,11 +146,11 @@ export default function SearchGrid({ combinations }: { combinations: Combo[] }) 
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex -space-x-4">
-                  <div className={`w-14 h-14 ${combo.source.color} rounded-full flex items-center justify-center text-white text-base font-bold border-4 border-white shadow-lg group-hover:scale-110 transition-transform`}>
-                    {combo.source.name[0]}
+                  <div className={`w-14 h-14 ${combo.source.color} rounded-full border-4 border-white shadow-lg group-hover:scale-110 transition-transform overflow-hidden`}>
+                    <AppLogo name={combo.source.name} logo={combo.source.logo} size="md" className={combo.source.color} />
                   </div>
-                  <div className={`w-14 h-14 ${combo.dest.color} rounded-full flex items-center justify-center text-white text-base font-bold border-4 border-white shadow-lg group-hover:scale-110 transition-transform`}>
-                    {combo.dest.name[0]}
+                  <div className={`w-14 h-14 ${combo.dest.color} rounded-full border-4 border-white shadow-lg group-hover:scale-110 transition-transform overflow-hidden`}>
+                    <AppLogo name={combo.dest.name} logo={combo.dest.logo} size="md" className={combo.dest.color} />
                   </div>
                 </div>
                 

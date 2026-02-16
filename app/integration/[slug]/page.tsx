@@ -2,6 +2,8 @@ import { apps } from "@/data/apps";
 import { getAllCombinations } from "@/lib/combinations";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import AppLogo from "@/components/AppLogo";
+import type { Metadata } from "next";
 
 // Generate Static Params (Pre-builds all pages)
 export async function generateStaticParams() {
@@ -9,6 +11,87 @@ export async function generateStaticParams() {
   return combos.map((combo) => ({
     slug: combo.slug,
   }));
+}
+
+// Generate Dynamic Metadata for SEO
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const { slug } = resolvedParams;
+  
+  const [sourceId, destId] = slug.split("-to-");
+  const sourceApp = apps.find((a) => a.id === sourceId);
+  const destApp = apps.find((a) => a.id === destId);
+
+  if (!sourceApp || !destApp) {
+    return {
+      title: "Integration Not Found",
+    };
+  }
+
+  const title = `Connect ${sourceApp.name} to ${destApp.name} - Integration Guide 2026`;
+  const description = `Learn how to integrate ${sourceApp.name} with ${destApp.name}. Automate workflows between ${sourceApp.category} and ${destApp.category} tools. Step-by-step setup guide with templates.`;
+  const url = `https://integrationhub.com/integration/${slug}`;
+  
+  // Generate a simple OG image URL (you can create actual images later)
+  const ogImage = `https://integrationhub.com/api/og?source=${encodeURIComponent(sourceApp.name)}&dest=${encodeURIComponent(destApp.name)}`;
+
+  return {
+    title,
+    description,
+    keywords: [
+      `${sourceApp.name} integration`,
+      `${destApp.name} integration`,
+      `${sourceApp.name} ${destApp.name}`,
+      `connect ${sourceApp.name} to ${destApp.name}`,
+      `${sourceApp.name} automation`,
+      `${destApp.name} automation`,
+      sourceApp.category,
+      destApp.category,
+      "automation",
+      "integration",
+      "workflow",
+      "zapier alternative",
+      "make.com",
+    ],
+    authors: [{ name: "IntegrationHub" }],
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: "IntegrationHub",
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: `${sourceApp.name} to ${destApp.name} Integration`,
+        },
+      ],
+      locale: "en_US",
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImage],
+      creator: "@integrationhub",
+    },
+    alternates: {
+      canonical: url,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
+  };
 }
 
 // The Page Component
@@ -24,18 +107,73 @@ export default async function IntegrationPage({ params }: { params: Promise<{ sl
     return notFound();
   }
 
+  // JSON-LD Schema for SEO
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: `How to Connect ${sourceApp.name} to ${destApp.name}`,
+    description: `Step-by-step guide to integrate ${sourceApp.name} with ${destApp.name} for workflow automation.`,
+    image: `https://integrationhub.com/api/og?source=${encodeURIComponent(sourceApp.name)}&dest=${encodeURIComponent(destApp.name)}`,
+    totalTime: "PT15M",
+    estimatedCost: {
+      "@type": "MonetaryAmount",
+      currency: "USD",
+      value: "0",
+    },
+    tool: [
+      {
+        "@type": "HowToTool",
+        name: sourceApp.name,
+      },
+      {
+        "@type": "HowToTool",
+        name: destApp.name,
+      },
+    ],
+    step: [
+      {
+        "@type": "HowToStep",
+        name: "Sign up for automation platform",
+        text: "Create a free account on Make.com to connect your apps.",
+        url: "https://www.make.com/en/register?pc=jaymieblaze",
+      },
+      {
+        "@type": "HowToStep",
+        name: `Connect ${sourceApp.name}`,
+        text: `Authenticate your ${sourceApp.name} account.`,
+      },
+      {
+        "@type": "HowToStep",
+        name: `Connect ${destApp.name}`,
+        text: `Authenticate your ${destApp.name} account.`,
+      },
+      {
+        "@type": "HowToStep",
+        name: "Configure automation",
+        text: `Set up triggers and actions between ${sourceApp.name} and ${destApp.name}.`,
+      },
+    ],
+  };
+
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 via-white to-purple-50 relative overflow-hidden">
-      {/* Animated Background Orbs */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl animate-blob" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-400/20 rounded-full blur-3xl animate-blob animation-delay-2000" />
+    <>
+      {/* JSON-LD Schema for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      
+      <div className="min-h-screen bg-linear-to-br from-blue-50 via-white to-purple-50 relative overflow-hidden">
+        {/* Animated Background Orbs */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl animate-blob" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-400/20 rounded-full blur-3xl animate-blob animation-delay-2000" />
       
       <div className="relative z-10 flex flex-col items-center py-6 sm:py-8 md:py-12 px-3 sm:px-4">
         <div className="max-w-4xl w-full bg-white/80 backdrop-blur-sm shadow-2xl rounded-2xl md:rounded-3xl p-6 sm:p-8 md:p-12 border-2 border-white/50 animate-slide-up">
           {/* Header Icons */}
           <div className="flex items-center justify-center gap-3 sm:gap-4 md:gap-6 mb-6 md:mb-8">
-            <div className={`w-16 h-16 sm:w-20 sm:h-20 ${sourceApp.color} rounded-xl md:rounded-2xl flex items-center justify-center text-white font-bold text-2xl sm:text-3xl shadow-xl transform hover:scale-110 transition-transform`}>
-              {sourceApp.name[0]}
+            <div className={`w-16 h-16 sm:w-20 sm:h-20 ${sourceApp.color} rounded-xl md:rounded-2xl shadow-xl transform hover:scale-110 transition-transform overflow-hidden`}>
+              <AppLogo name={sourceApp.name} logo={sourceApp.logo} size="lg" className={sourceApp.color} />
             </div>
             <div className="flex flex-col items-center">
               <svg className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -43,8 +181,8 @@ export default async function IntegrationPage({ params }: { params: Promise<{ sl
               </svg>
               <span className="text-xs font-semibold text-blue-600 mt-1 hidden sm:block">Connects to</span>
             </div>
-            <div className={`w-16 h-16 sm:w-20 sm:h-20 ${destApp.color} rounded-xl md:rounded-2xl flex items-center justify-center text-white font-bold text-2xl sm:text-3xl shadow-xl transform hover:scale-110 transition-transform`}>
-              {destApp.name[0]}
+            <div className={`w-16 h-16 sm:w-20 sm:h-20 ${destApp.color} rounded-xl md:rounded-2xl shadow-xl transform hover:scale-110 transition-transform overflow-hidden`}>
+              <AppLogo name={destApp.name} logo={destApp.logo} size="lg" className={destApp.color} />
             </div>
           </div>
 
@@ -144,5 +282,6 @@ export default async function IntegrationPage({ params }: { params: Promise<{ sl
         </div>
       </div>
     </div>
+    </>
   );
 }
