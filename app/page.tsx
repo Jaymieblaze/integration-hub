@@ -1,85 +1,63 @@
-// import { getAllCombinations } from "@/lib/combinations";
-// import Link from "next/link";
-
-// export default function Home() {
-//   const combinations = getAllCombinations();
-
-//   return (
-//     <div className="min-h-screen bg-white p-8 md:p-16">
-//       {/* Header Section */}
-//       <div className="max-w-4xl mx-auto text-center mb-16">
-//         <h1 className="text-5xl font-extrabold text-slate-900 mb-6 tracking-tight">
-//           Integration<span className="text-blue-600">Hub</span>
-//         </h1>
-//         <p className="text-xl text-slate-600 mb-8">
-//           The automation directory. Connect your favorite apps instantly.
-//         </p>
-//       </div>
-
-//       {/* Grid of All Integrations */}
-//       <div className="max-w-6xl mx-auto">
-//         <h2 className="text-2xl font-bold mb-6 text-slate-800">Available Connections</h2>
-        
-//         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-//           {combinations.map((combo) => (
-//             <Link 
-//               key={combo.slug} 
-//               href={`/integration/${combo.slug}`}
-//               className="group block p-6 bg-white border border-slate-200 rounded-xl hover:shadow-lg hover:border-blue-300 transition-all"
-//             >
-//               <div className="flex items-center space-x-4">
-//                 {/* Icons */}
-//                 <div className="flex -space-x-3">
-//                   <div className={`w-10 h-10 ${combo.source.color} rounded-full flex items-center justify-center text-white text-xs font-bold border-2 border-white`}>
-//                     {combo.source.name[0]}
-//                   </div>
-//                   <div className={`w-10 h-10 ${combo.dest.color} rounded-full flex items-center justify-center text-white text-xs font-bold border-2 border-white`}>
-//                     {combo.dest.name[0]}
-//                   </div>
-//                 </div>
-                
-//                 {/* Text */}
-//                 <div>
-//                   <h3 className="font-semibold text-slate-900 group-hover:text-blue-600">
-//                     {combo.source.name} + {combo.dest.name}
-//                   </h3>
-//                 </div>
-//               </div>
-//             </Link>
-//           ))}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// app/page.tsx
 import { getAllCombinations } from "@/lib/combinations";
 import SearchGrid from "@/components/SearchGrid";
+import { apps } from "@/data/apps";
 
 export default function Home() {
   const combinations = getAllCombinations();
+  const totalIntegrations = combinations.length;
+  const totalApps = apps.length;
 
   return (
-    <div className="min-h-screen bg-white p-8 md:p-16">
-      {/* Header */}
-      <div className="max-w-4xl mx-auto text-center mb-16">
-        <h1 className="text-5xl font-extrabold text-slate-900 mb-6 tracking-tight">
-          Integration<span className="text-blue-600">Hub</span>
-        </h1>
-        <p className="text-xl text-slate-600 mb-8">
-          The automation directory. Connect your favorite apps instantly.
-        </p>
-      </div>
+    <div className="min-h-screen bg-linear-to-br from-blue-50 via-white to-purple-50 relative overflow-hidden">
+      {/* Animated Background Orbs */}
+      <div className="absolute top-0 left-0 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl animate-blob" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-purple-400/20 rounded-full blur-3xl animate-blob animation-delay-2000" />
+      <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-pink-400/20 rounded-full blur-3xl animate-blob animation-delay-4000" />
+      
+      <div className="relative z-10 px-4 py-8 sm:px-6 md:px-12 md:py-12">
+        {/* Header */}
+        <div className="max-w-5xl mx-auto text-center mb-6 md:mb-8">
+          <div className="inline-block mb-3 md:mb-4 px-3 py-1.5 md:px-4 md:py-2 bg-blue-100 text-blue-600 rounded-full text-xs md:text-sm font-semibold animate-fade-in">
+            ✨ Discover Powerful Automation
+          </div>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-slate-900 mb-4 md:mb-6 tracking-tight animate-slide-up leading-tight">
+            Integration<span className="bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Hub</span>
+          </h1>
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-slate-600 mb-6 md:mb-8 max-w-3xl mx-auto animate-slide-up animation-delay-200 px-2">
+            Connect your favorite apps and automate your workflow. Save hours every week with seamless integrations.
+          </p>
+        </div>
 
-      {/* Search & Grid */}
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-2xl font-bold mb-6 text-slate-800 text-center">
-          Find Your Integration
-        </h2>
-        
-        {/* Pass data to Client Component */}
-        <SearchGrid combinations={combinations} />
+        {/* Search & Grid - Now positioned higher */}
+        <div className="max-w-7xl mx-auto mb-8 md:mb-12">
+          <SearchGrid combinations={combinations} />
+        </div>
+
+        {/* Stats - Now below search on mobile, but can be scrolled to */}
+        <div className="max-w-5xl mx-auto text-center">
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 animate-slide-up animation-delay-400">
+            <div className="group cursor-pointer">
+              <div className="text-3xl sm:text-4xl md:text-5xl font-bold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent group-hover:scale-110 transition-transform">
+                {totalIntegrations}+
+              </div>
+              <div className="text-xs sm:text-sm text-slate-500 font-medium">Integrations</div>
+            </div>
+            <div className="w-px bg-slate-200" />
+            <div className="group cursor-pointer">
+              <div className="text-3xl sm:text-4xl md:text-5xl font-bold bg-linear-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent group-hover:scale-110 transition-transform">
+                {totalApps}+
+              </div>
+              <div className="text-xs sm:text-sm text-slate-500 font-medium">Apps</div>
+            </div>
+            <div className="w-px bg-slate-200" />
+            <div className="group cursor-pointer">
+              <div className="text-3xl sm:text-4xl md:text-5xl font-bold bg-linear-to-r from-pink-600 to-orange-600 bg-clip-text text-transparent group-hover:scale-110 transition-transform">
+                100%
+              </div>
+              <div className="text-xs sm:text-sm text-slate-500 font-medium">Free</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
