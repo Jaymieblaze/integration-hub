@@ -451,16 +451,10 @@ export default async function IntegrationPage({ params }: { params: Promise<{ sl
                     <div className="shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-purple-500 text-white rounded-xl flex items-center justify-center font-bold text-lg sm:text-xl">2</div>
                     <div className="flex-1">
                       <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-2">Create a New Scenario</h3>
-                      <p className="text-sm sm:text-base text-slate-600 mb-3">
+                      <p className="text-sm sm:text-base text-slate-600">
                         Once logged in, click the <strong>&quot;Create a new scenario&quot;</strong> button in your Make.com dashboard. 
                         A scenario is Make.com&apos;s term for an automated workflow.
                       </p>
-                      <div className="bg-blue-50 rounded-lg p-3 border border-blue-200 mb-3">
-                        <p className="text-xs sm:text-sm text-blue-900 font-medium mb-2">📸 Visual Reference:</p>
-                        <div className="bg-white rounded border-2 border-dashed border-blue-300 p-8 text-center text-slate-400 text-sm">
-                          [Screenshot: Make.com dashboard with &quot;Create new scenario&quot; button highlighted]
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -489,12 +483,6 @@ export default async function IntegrationPage({ params }: { params: Promise<{ sl
                           <span className="text-slate-600">Select which data or events you want to monitor</span>
                         </div>
                       </div>
-                      <div className="bg-blue-50 rounded-lg p-3 border border-blue-200">
-                        <p className="text-xs sm:text-sm text-blue-900 font-medium mb-2">📸 Visual Reference:</p>
-                        <div className="bg-white rounded border-2 border-dashed border-blue-300 p-8 text-center text-slate-400 text-sm">
-                          [Screenshot: {sourceApp.name} trigger module configuration with connection dialog]
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -521,12 +509,6 @@ export default async function IntegrationPage({ params }: { params: Promise<{ sl
                         <div className="flex items-start gap-2 text-xs sm:text-sm">
                           <span className="text-purple-600 font-bold shrink-0">→</span>
                           <span className="text-slate-600">You&apos;ll see available data from {sourceApp.name} in a dropdown menu</span>
-                        </div>
-                      </div>
-                      <div className="bg-purple-50 rounded-lg p-3 border border-purple-200">
-                        <p className="text-xs sm:text-sm text-purple-900 font-medium mb-2">📸 Visual Reference:</p>
-                        <div className="bg-white rounded border-2 border-dashed border-purple-300 p-8 text-center text-slate-400 text-sm">
-                          [Screenshot: {destApp.name} action module with field mapping interface]
                         </div>
                       </div>
                     </div>
@@ -590,12 +572,6 @@ export default async function IntegrationPage({ params }: { params: Promise<{ sl
                         <div className="flex items-start gap-2 text-xs sm:text-sm">
                           <span className="text-green-600 font-bold shrink-0">✓</span>
                           <span className="text-slate-600">Look for any error messages in the execution log</span>
-                        </div>
-                      </div>
-                      <div className="bg-green-50 rounded-lg p-3 border border-green-200">
-                        <p className="text-xs sm:text-sm text-green-900 font-medium mb-2">📸 Visual Reference:</p>
-                        <div className="bg-white rounded border-2 border-dashed border-green-300 p-8 text-center text-slate-400 text-sm">
-                          [Screenshot: Successful test execution with green checkmarks on modules]
                         </div>
                       </div>
                     </div>
